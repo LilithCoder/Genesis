@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Genesis.iml" filepath="$PROJECT_DIR$/Genesis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/genesis-common/genesis-common.iml" filepath="$PROJECT_DIR$/genesis-common/genesis-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/genesis-rpc/genesis-rpc.iml" filepath="$PROJECT_DIR$/genesis-rpc/genesis-rpc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/genesis-rpc/genesis-rpc-api/genesis-rpc-api.iml" filepath="$PROJECT_DIR$/genesis-rpc/genesis-rpc-api/genesis-rpc-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/genesis-rpc/genesis-rpc-netty/genesis-rpc-netty.iml" filepath="$PROJECT_DIR$/genesis-rpc/genesis-rpc-netty/genesis-rpc-netty.iml" />
+    </modules>
+  </component>
+</project>
