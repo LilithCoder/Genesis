@@ -24,6 +24,7 @@
 <!--    aggregate all modules-->
     <modules>
         <module>genesis-common</module>
-        <module>genesis-rpc</module>
+        <module>genesis-remoting</module>
+        <module>genesis-registry</module>
     </modules>
 </project>
