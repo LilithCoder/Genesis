@@ -1,4 +1,4 @@
-package com.hatsukoi.genesis.codec;
+package com.hatsukoi.genesis.remoting.transport.codec;
 
 /**
  *

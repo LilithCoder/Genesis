@@ -26,5 +26,6 @@
         <module>genesis-common</module>
         <module>genesis-remoting</module>
         <module>genesis-registry</module>
+        <module>genesis-rpc</module>
     </modules>
 </project>

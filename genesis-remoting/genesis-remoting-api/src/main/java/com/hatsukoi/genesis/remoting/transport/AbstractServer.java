@@ -1,4 +1,4 @@
-package com.hatsukoi.genesis.transport;
+package com.hatsukoi.genesis.remoting.transport;
 
 /**
  * @author gaoweilin

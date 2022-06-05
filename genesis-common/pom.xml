@@ -13,5 +13,16 @@
     <version>1.0-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <log4jVersion>1.2.17</log4jVersion>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4jVersion}</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

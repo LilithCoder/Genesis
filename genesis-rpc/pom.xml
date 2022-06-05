@@ -10,6 +10,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>genesis-rpc</artifactId>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hatsukoi.genesis</groupId>
+            <artifactId>genesis-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>genesis-rpc-api</module>
+        <module>genesis-rpc-genesis</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

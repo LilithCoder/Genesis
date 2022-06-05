@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.hatsukoi.genesis.common.constant.CommonConstant.*;
+
 /**
  * URL is used to describe all objects and config info
  * @author gaoweilin
@@ -58,5 +60,20 @@ public class URL implements Serializable {
             params = new HashMap<>(params);
         }
         this.params = Collections.unmodifiableMap(params);
+    }
+
+    /**
+     * Return param value based on specific key
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public String getParam(String key, String defaultValue) {
+        String value = params.get(key);
+        return StringUtils.isEmpty(value) ? defaultValue : value;
+    }
+
+    public String getServiceInterface() {
+        return getParam(INTERFACE_KEY, path);
     }
 }

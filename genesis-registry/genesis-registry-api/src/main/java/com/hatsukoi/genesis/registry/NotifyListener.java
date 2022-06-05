@@ -1,4 +1,4 @@
-package com.hatsukoi.genesis.rpc;
+package com.hatsukoi.genesis.registry;
 
 import com.hatsukoi.genesis.common.URL;
 
