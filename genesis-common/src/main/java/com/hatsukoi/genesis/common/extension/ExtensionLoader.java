@@ -251,6 +251,10 @@ public class ExtensionLoader<T> {
             }
         }
     }
+
+    public T getDefaultExtension() {
+        return null;
+    }
 }
 
 

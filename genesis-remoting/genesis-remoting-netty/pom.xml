@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>genesis-remoting</artifactId>
-        <groupId>org.hatsukoi.genesis</groupId>
+        <groupId>com.hatsukoi.genesis</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -19,7 +19,7 @@
             <version>${netty4_version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hatsukoi.genesis</groupId>
+            <groupId>com.hatsukoi.genesis</groupId>
             <artifactId>genesis-remoting-api</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>

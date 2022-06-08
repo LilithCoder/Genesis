@@ -24,6 +24,10 @@ public abstract class AbstractRegistry implements Registry {
     private final Set<URL> registered = ConcurrentHashMap.newKeySet();
     private final ConcurrentMap<URL, Set<NotifyListener>> subscribed = new ConcurrentHashMap<>();
 
+    public AbstractRegistry(URL url) {
+        // TODO
+    }
+
     /**
      * Notify changes from provider
      * @param consumer       consumer url
