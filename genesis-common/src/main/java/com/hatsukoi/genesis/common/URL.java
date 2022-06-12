@@ -26,7 +26,7 @@ public class URL implements Serializable {
     private String password;
     private String host;                    // 127.0.0.1
     private int port;                       // 8080
-    private String path;                    // com.hatsukoi.genesis.demo.demoService
+    private String path;                    // com.hatsukoi.genesis.demo.ProviderService
     private String address;                 // 127.0.0.1:8080
     private Map<String, String> params;     // 参数键值对
 
@@ -95,6 +95,10 @@ public class URL implements Serializable {
 
     public int getPort() {
         return this.port;
+    }
+
+    public String getProtocol() {
+        return this.protocol;
     }
 
 }
