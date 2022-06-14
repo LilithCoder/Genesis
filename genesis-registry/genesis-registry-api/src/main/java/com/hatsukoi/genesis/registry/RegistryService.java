@@ -15,31 +15,27 @@ public interface RegistryService {
      * @param url
      */
     void register(URL url);
-
     /**
      * 取消注册一个url
      * @param url
      */
     void unregister(URL url);
-
     /**
-     * Subscribe to eligible registered data
-     * and automatically push when the registered data is changed.
-     * @param url      Subscription condition
-     * @param listener A listener of the change event
+     * 订阅一个 URL
+     * @param url
+     * @param listener      订阅数据的监听器
      */
     void subscribe(URL url, NotifyListener listener);
     /**
-     * Unsubscribe to eligible registered data
-     * @param url      Subscription condition
-     * @param listener A listener of the change event
+     * 取消订阅一个 URL
+     * @param url
+     * @param listener      订阅数据的监听器
      */
     void unsubscribe(URL url, NotifyListener listener);
-
     /**
-     * Query the registered data that matches the conditions
-     * @param url       Query condition
-     * @return          The registered information list
+     * 查询符合条件的注册数据
+     * @param url
+     * @return
      */
     List<URL> lookup(URL url);
 }

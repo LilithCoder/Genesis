@@ -1,6 +1,7 @@
 package com.hatsukoi.genesis.common;
 
 /**
+ * 抽象节点 - 可用来表示Provider/Consumer节点/注册中心节点
  * @author gaoweilin
  * @date 2022/06/03 Fri 7:26 PM
  */

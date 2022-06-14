@@ -29,6 +29,7 @@ public class URL implements Serializable {
     private String path;                    // com.hatsukoi.genesis.demo.ProviderService
     private String address;                 // 127.0.0.1:8080
     private Map<String, String> params;     // 参数键值对
+    private transient String serviceKey;    // 服务key
 
     // ================== constructor ==================
     public URL(String protocol,
@@ -99,6 +100,33 @@ public class URL implements Serializable {
 
     public String getProtocol() {
         return this.protocol;
+    }
+
+    public URL setPath(String path) {
+        this.path = path;
+        return this;
+    }
+
+    public URL addParam(String key, String value) {
+        if (StringUtils.isEmpty(key) || StringUtils.isEmpty(value)) { return this; }
+        this.params.put(key, value);
+        return this;
+    }
+
+    /**
+     * 返回 '{group}/{interfaceName}:{version}'
+     * @return
+     */
+    public String getServiceKey() {
+        if (serviceKey != null) {
+            return serviceKey;
+        }
+        String inf = getServiceInterface();
+        if (inf == null) {
+            return null;
+        }
+        serviceKey = "{group}/{" + inf + "}:{version}";
+        return serviceKey;
     }
 
 }

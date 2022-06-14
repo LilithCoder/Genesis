@@ -13,10 +13,11 @@ import com.hatsukoi.genesis.common.extension.SPI;
 public interface RegistryFactory {
 
     /**
-     * 表示会生成适配器类并根据 URL 参数中的 protocol 参数值选择相应的实现
+     * 获取注册节点
+     * Adaptive 注解表示会生成适配器类并根据 URL 参数中的 protocol 参数值选择相应的实现
      * @param url
      * @return
      */
-    @Adaptive("protocol")
+    @Adaptive({"protocol"})
     Registry getRegistry(URL url);
 }
