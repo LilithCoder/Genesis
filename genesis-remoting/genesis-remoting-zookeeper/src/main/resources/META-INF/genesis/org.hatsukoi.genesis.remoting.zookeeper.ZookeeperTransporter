@@ -1,0 +1,1 @@
+curator=org.hatsukoi.genesis.remoting.zookeeper.curator.CuratorZookeeperTransporter

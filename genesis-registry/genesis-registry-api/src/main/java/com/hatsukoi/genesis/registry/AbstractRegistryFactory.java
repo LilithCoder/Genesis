@@ -9,6 +9,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 实现了 RegistryFactory 接口的抽象类
+ * 提供了缓存 Registry 对象的功能
+ * 并未真正实现 Registry 的创建，具体的创建逻辑是由子类完成
  * @author gaoweilin
  * @date 2022/06/05 Sun 10:17 AM
  */

@@ -78,7 +78,7 @@ public abstract class AbstractRegistry implements Registry {
         loadProperties();
     }
 
-    // ===================== 公开方法 =====================
+    // ===================== 公有方法 =====================
     /**
      * 来自 Provider 的通知
      * 当 Provider 端暴露的 URL 发生变化时，ZooKeeper 等服务发现组件会通知 Consumer 端的 Registry 组件，
