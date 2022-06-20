@@ -17,8 +17,10 @@ import java.io.OutputStream;
 @SPI("hessian2") // 被@SPI注解修饰，默认是使用hessian2序列化算法
 public interface Serialization {
 
+    // 每一种序列化算法都对应一个ContentType，该方法用于获取ContentType
     String getContentType();
 
+    // 获取ContentType的ID值，是一个byte类型的值，唯一确定一个算法
     byte getContentTypeId();
 
     /**

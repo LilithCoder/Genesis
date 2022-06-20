@@ -9,6 +9,7 @@ import java.io.IOException;
 import static com.hatsukoi.genesis.common.constant.remoting.RemotingConstant.CODEC_KEY;
 
 /**
+ * 负责编解码的 ChannelHandler 的抽象接口
  * @author gaoweilin
  * @date 2022/06/07 Tue 1:23 AM
  */

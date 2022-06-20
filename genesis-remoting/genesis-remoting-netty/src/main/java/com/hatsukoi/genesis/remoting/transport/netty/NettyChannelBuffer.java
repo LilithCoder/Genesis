@@ -5,6 +5,7 @@ import com.hatsukoi.genesis.remoting.buffer.ChannelBufferFactory;
 import io.netty.buffer.ByteBuf;
 
 /**
+ * 基于 Netty 中 ByteBuf 的 ChannelBuffer 实现
  * @author gaoweilin
  * @date 2022/06/07 Tue 3:06 AM
  */

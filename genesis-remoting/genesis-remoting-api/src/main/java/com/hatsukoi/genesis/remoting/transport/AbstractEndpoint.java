@@ -20,4 +20,14 @@ public abstract class AbstractEndpoint extends AbstractPeer {
         super(url, handler);
         // TODO: 初始化成员变量
     }
+
+    protected static Codec getChannelCodec(URL url) {
+        String codecName = url.getParameter(Constants.CODEC_KEY, "telnet");
+        if (ExtensionLoader.getExtensionLoader(Codec2.class).hasExtension(codecName)) {
+            return ExtensionLoader.getExtensionLoader(Codec2.class).getExtension(codecName);
+        } else {
+            return new CodecAdapter(ExtensionLoader.getExtensionLoader(Codec.class)
+                    .getExtension(codecName));
+        }
+    }
 }

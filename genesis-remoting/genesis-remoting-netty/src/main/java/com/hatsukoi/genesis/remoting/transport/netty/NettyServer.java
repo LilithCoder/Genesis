@@ -4,12 +4,18 @@ import com.hatsukoi.genesis.common.URL;
 import com.hatsukoi.genesis.remoting.ChannelHandler;
 import com.hatsukoi.genesis.remoting.transport.AbstractServer;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.apache.log4j.Logger;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * @author gaoweilin
@@ -42,20 +48,50 @@ public class NettyServer extends AbstractServer {
      */
     @Override
     protected void doOpen() throws Throwable {
+        // 创建ServerBootstrap
         bootstrap = new ServerBootstrap();
-        bossGroup = new NioEventLoopGroup();
-        workerGroup = new NioEventLoopGroup();
+
+        // 创建boss EventLoopGroup
+        bossGroup = NettyEventLoopFactory.eventLoopGroup(1, "NettyServerBoss");
+
+        // 创建worker EventLoopGroup
+        workerGroup = NettyEventLoopFactory.eventLoopGroup(
+                getUrl().getPositiveParameter(IO_THREADS_KEY, Constants.DEFAULT_IO_THREADS),
+                "NettyServerWorker");
+
+        // 创建NettyServerHandler，它是一个Netty中的ChannelHandler实现，
+        final NettyServerHandler nettyServerHandler = new NettyServerHandler(getUrl(), this);
+
+        // 获取当前NettyServer创建的所有Channel
+        channels = nettyServerHandler.getChannels();
 
         bootstrap.group(bossGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
-                .option(ChannelOption.SO_BACKLOG, 1024)
-                .childOption(ChannelOption.SO_KEEPALIVE, true)
-                .childOption(ChannelOption.TCP_NODELAY, true)
-                .childHandler(new ChannelInitializer<NioSocketChannel>() {
+                .channel(NettyEventLoopFactory.serverSocketChannelClass())
+                .option(ChannelOption.SO_REUSEADDR, Boolean.TRUE)
+                .childOption(ChannelOption.TCP_NODELAY, Boolean.TRUE)
+                .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        // 连接空闲超时时间
+                        int idleTimeout = UrlUtils.getIdleTimeout(getUrl());
 
+                        // NettyCodecAdapter中会创建Decoder和Encoder
+                        NettyCodecAdapter adapter = new NettyCodecAdapter(getCodec(), getUrl(), NettyServer.this);
+                        if (getUrl().getParameter(SSL_ENABLED_KEY, false)) {
+                            ch.pipeline().addLast("negotiation",
+                                    SslHandlerInitializer.sslServerHandler(getUrl(), nettyServerHandler));
+                        }
+                        ch.pipeline()
+                                .addLast("decoder", adapter.getDecoder())
+                                .addLast("encoder", adapter.getEncoder())
+                                .addLast("server-idle-handler", new IdleStateHandler(0, 0, idleTimeout, MILLISECONDS))
+                                .addLast("handler", nettyServerHandler);
                     }
-                })
+                });
+        // bind
+        ChannelFuture channelFuture = bootstrap.bind(getBindAddress());
+        channelFuture.syncUninterruptibly();
+        channel = channelFuture.channel();
     }
 }
