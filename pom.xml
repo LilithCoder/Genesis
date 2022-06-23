@@ -29,5 +29,6 @@
         <module>genesis-rpc</module>
         <module>genesis-serialization</module>
         <module>genesis-demo</module>
+        <module>tiny-genesis</module>
     </modules>
 </project>
