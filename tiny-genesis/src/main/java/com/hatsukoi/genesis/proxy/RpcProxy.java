@@ -7,8 +7,8 @@ import com.hatsukoi.genesis.protocol.Request;
 import com.hatsukoi.genesis.registry.Registry;
 import com.hatsukoi.genesis.registry.ServerInfo;
 import com.hatsukoi.genesis.transport.Connection;
-import com.hatsukoi.genesis.transport.NettyResponseFuture;
-import com.hatsukoi.genesis.transport.RpcClient;
+import com.hatsukoi.genesis.transport.netty.NettyResponseFuture;
+import com.hatsukoi.genesis.transport.netty.NettyRpcClient;
 import io.netty.channel.ChannelFuture;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.apache.log4j.Logger;
@@ -89,7 +89,7 @@ public class RpcProxy implements InvocationHandler {
         Object result = null;
         try {
             // 创建RpcClient，连接指定的Server端
-            RpcClient client = new RpcClient(serverInfo.getHost(), serverInfo.getPort());
+            NettyRpcClient client = new NettyRpcClient(serverInfo.getHost(), serverInfo.getPort());
             ChannelFuture channelFuture = client.connect().awaitUninterruptibly();
             // 创建对应的Connection对象，并发送请求
             Connection connection = new Connection(channelFuture);

@@ -1,4 +1,4 @@
-package com.hatsukoi.genesis.transport;
+package com.hatsukoi.genesis.transport.netty;
 
 import com.hatsukoi.genesis.protocol.Message;
 import com.hatsukoi.genesis.protocol.Request;

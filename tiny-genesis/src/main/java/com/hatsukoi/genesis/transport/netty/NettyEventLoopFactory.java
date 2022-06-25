@@ -1,4 +1,4 @@
-package com.hatsukoi.genesis.transport;
+package com.hatsukoi.genesis.transport.netty;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.EpollEventLoopGroup;

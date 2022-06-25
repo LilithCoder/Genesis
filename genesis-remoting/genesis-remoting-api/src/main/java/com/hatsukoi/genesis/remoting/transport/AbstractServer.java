@@ -3,16 +3,11 @@ package com.hatsukoi.genesis.remoting.transport;
 import com.hatsukoi.genesis.common.URL;
 import com.hatsukoi.genesis.common.extension.ExtensionLoader;
 import com.hatsukoi.genesis.common.threadpool.ExecutorRepository;
-import com.hatsukoi.genesis.remoting.Channel;
 import com.hatsukoi.genesis.remoting.ChannelHandler;
 import com.hatsukoi.genesis.remoting.Server;
 
 import java.net.InetSocketAddress;
-import java.util.Collection;
 import java.util.concurrent.ExecutorService;
-
-import static com.hatsukoi.genesis.common.constant.remoting.RemotingConstant.BIND_IP_KEY;
-import static com.hatsukoi.genesis.common.constant.remoting.RemotingConstant.BIND_PORT_KEY;
 
 /**
  * @author gaoweilin

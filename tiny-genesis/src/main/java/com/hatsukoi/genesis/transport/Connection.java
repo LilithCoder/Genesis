@@ -3,6 +3,7 @@ package com.hatsukoi.genesis.transport;
 import com.hatsukoi.genesis.protocol.Message;
 import com.hatsukoi.genesis.protocol.Request;
 import com.hatsukoi.genesis.protocol.Response;
+import com.hatsukoi.genesis.transport.netty.NettyResponseFuture;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.DefaultEventLoop;
 import io.netty.util.concurrent.DefaultPromise;

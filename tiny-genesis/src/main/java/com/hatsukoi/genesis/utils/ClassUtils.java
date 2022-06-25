@@ -1,4 +1,4 @@
-package com.hatsukoi.genesis.common.utils;
+package com.hatsukoi.genesis.utils;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

@@ -1,8 +1,10 @@
-package com.hatsukoi.genesis.transport;
+package com.hatsukoi.genesis.transport.netty;
 
 import com.hatsukoi.genesis.Constants;
 import com.hatsukoi.genesis.codec.RpcDecoder;
 import com.hatsukoi.genesis.codec.RpcEncoder;
+import com.hatsukoi.genesis.transport.RpcClientHandler;
+import com.hatsukoi.genesis.transport.netty.NettyEventLoopFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelFuture;
@@ -19,7 +21,7 @@ import java.io.IOException;
  * @author gaoweilin
  * @date 2022/06/23 Thu 1:14 AM
  */
-public class RpcClient implements Closeable {
+public class NettyRpcClient implements Closeable {
 
     protected Bootstrap clientBootstrap;
     protected EventLoopGroup workerGroup;
@@ -31,7 +33,7 @@ public class RpcClient implements Closeable {
      * @param host
      * @param port
      */
-    public RpcClient(String host, int port) {
+    public NettyRpcClient(String host, int port) {
         this.host = host;
         this.port = port;
         // 创建并配置客户端Bootstrap

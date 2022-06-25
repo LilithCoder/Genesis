@@ -1,7 +1,7 @@
-package com.hatsukoi.genesis.common.extension;
+package com.hatsukoi.genesis.extension;
 
-import com.hatsukoi.genesis.common.utils.ClassUtils;
-import com.hatsukoi.genesis.common.utils.StringUtils;
+import com.hatsukoi.genesis.annotation.SPI;
+import com.hatsukoi.genesis.utils.*;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
@@ -62,8 +62,6 @@ public class ExtensionLoader<T> {
      * 适配器扩展实现实例缓存
      */
     private Object cachedAdaptiveInstance;
-
-    private ExtensionFactory extensionFactory;
 
     private ExtensionLoader(Class<?> type) {
         this.type = type;
@@ -173,8 +171,8 @@ public class ExtensionLoader<T> {
                 EXTENSION_INSTANCES.putIfAbsent(clazz, clazz.newInstance());
                 instance = (T) EXTENSION_INSTANCES.get(clazz);
             }
-            // 3. 自动装配新建的实例对象
-            injectExtensionInstance(instance);
+//            // 3. 自动装配新建的实例对象
+//            injectExtensionInstance(instance);
             return instance;
         } catch (Throwable t) {
             String errMsg = "Extension instance (name: " + name + ", class: " + type + ") couldn't be instantiated: ";
@@ -266,128 +264,47 @@ public class ExtensionLoader<T> {
                         logger.error(errMsg);
                         throw new IllegalStateException(errMsg);
                     }
-                    if (isAdaptiveClass(extClass)) {
-                        // 识别加载扩展实现类上的 @Adaptive 注解，缓存到 cachedAdaptiveClass
-                        if (cachedAdaptiveClass == null) {
-                            cachedAdaptiveClass = extClass;
-                        } else if (!cachedAdaptiveClass.equals(extClass)) {
-                            String errMsg = "More than 1 adaptive class found: " + cachedAdaptiveClass.getName();
-                            logger.error(errMsg);
-                            throw new IllegalStateException(errMsg);
-                        }
+                    Class<?> clazz = extensionClasses.get(name);
+                    // 最后将扩展名和扩展实现类的映射关系记录到 cachedClasses 缓存
+                    if (clazz == null) {
+                        extensionClasses.put(name, extClass);
                     } else {
-                        Class<?> clazz = extensionClasses.get(name);
-                        // 最后将扩展名和扩展实现类的映射关系记录到 cachedClasses 缓存
-                        if (clazz == null) {
-                            extensionClasses.put(name, extClass);
-                        } else {
-                            String errMsg = "Duplicate extension " + type.getName();
-                            logger.error(errMsg);
-                            throw new IllegalStateException(errMsg);
-                        }
+                        String errMsg = "Duplicate extension " + type.getName();
+                        logger.error(errMsg);
+                        throw new IllegalStateException(errMsg);
                     }
                 }
             }
         }
-    }
-
-    /**
-     * 是否适配器类
-     * @return
-     */
-    private boolean isAdaptiveClass(Class<?> clazz) {
-        return clazz.isAnnotationPresent(Adaptive.class);
-    }
-
-    /**
-     * 获取适配器实例（缓存or加载）
-     * @return
-     */
-    public T getAdaptiveExtension() {
-        // 1. 是否已缓存了适配器实例
-        if (cachedAdaptiveInstance == null) {
-            synchronized (cachedAdaptiveInstance) {
-                if (cachedAdaptiveInstance == null) {
-                    try {
-                        cachedAdaptiveInstance = createAdaptiveExtension();
-                    } catch (Exception e) {
-                        logger.error("Failed to create adaptive instance: ", e);
-                    }
-                }
-            }
-        }
-        return (T) cachedAdaptiveInstance;
-    }
-
-    /**
-     * 加载得到适配器实例
-     * @return
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     */
-    private Object createAdaptiveExtension() {
-        try {
-            return injectExtensionInstance((T) getAdaptiveExtensionClass().newInstance());
-        } catch (Throwable t) {
-            String errMsg = "Can't create adaptive extension " + type;
-            logger.error(errMsg, t);
-            throw new IllegalStateException(errMsg, t);
-        }
-    }
-
-    /**
-     * 获取适配器扩展类
-     * @return
-     */
-    private Class<?> getAdaptiveExtensionClass() {
-        // 获取所有扩展实现类 (缓存or加载)
-        getExtensionClasses();
-        if (cachedAdaptiveClass != null) {
-            return cachedAdaptiveClass;
-        }
-        // 自动生成和编译一个动态的Adaptive类
-        return cachedAdaptiveClass = createAdaptiveExtensionClass();
-    }
-
-    /**
-     * 自动生成和编译一个动态的Adaptive类
-     * @return
-     */
-    private Class<?> createAdaptiveExtensionClass() {
-        // TODO: 后续再迭代
-        return null;
     }
 
     /**
      * 自动装配新建的实例对象/填充属性
      * @param instance
      */
-    private T injectExtensionInstance(T instance) {
-        if (extensionFactory == null) {
-            return instance;
-        }
-        // 扫描其全部 setter 方法
-        for (Method method : instance.getClass().getMethods()) {
-            if (!ClassUtils.isSetter(method)) {
-                continue;
-            }
-            try {
-                // 根据setter方法的参数，确定属性类型
-                Class<?> parameterType = method.getParameterTypes()[0];
-                // 根据setter方法的名称，确定属性名称
-                String property = ClassUtils.getSetterProperty(method);
-                // 加载并实例化setter参数的扩展实现类
-                Object object = extensionFactory.getExtension(parameterType);
-                // 调用相应的 setter 方法填充属性
-                if (object != null) {
-                    method.invoke(instance, object);
-                }
-            } catch (Throwable t) {
-                String errMsg = "Failed to inject via method " + method.getName() + " of interface " + type.getName();
-                logger.error(errMsg);
-                throw new IllegalStateException(errMsg, t);
-            }
-        }
-        return instance;
-    }
+//    private T injectExtensionInstance(T instance) {
+//        // 扫描其全部 setter 方法
+//        for (Method method : instance.getClass().getMethods()) {
+//            if (!ClassUtils.isSetter(method)) {
+//                continue;
+//            }
+//            try {
+//                // 根据setter方法的参数，确定属性类型
+//                Class<?> parameterType = method.getParameterTypes()[0];
+//                // 根据setter方法的名称，确定属性名称
+//                String property = ClassUtils.getSetterProperty(method);
+//                // 加载并实例化setter参数的扩展实现类
+//                Object object = extensionFactory.getExtension(parameterType);
+//                // 调用相应的 setter 方法填充属性
+//                if (object != null) {
+//                    method.invoke(instance, object);
+//                }
+//            } catch (Throwable t) {
+//                String errMsg = "Failed to inject via method " + method.getName() + " of interface " + type.getName();
+//                logger.error(errMsg);
+//                throw new IllegalStateException(errMsg, t);
+//            }
+//        }
+//        return instance;
+//    }
 }

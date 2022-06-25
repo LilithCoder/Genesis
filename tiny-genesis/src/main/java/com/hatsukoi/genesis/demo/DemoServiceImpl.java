@@ -1,4 +1,4 @@
-package com.hatsukoi.genesis.test;
+package com.hatsukoi.genesis.demo;
 
 import org.apache.log4j.Logger;
 
@@ -15,15 +15,15 @@ public class DemoServiceImpl implements DemoService {
      * @return
      */
     @Override
-    public String hello(String param) {
+    public String mockMethod(String param) {
         // TODO: 补上消费者的信息
         String requestMsg = "[Provider] Request from Consumer: " + "Parameter: " + param;
         logger.info(requestMsg);
         try {
-            logger.info("Running Provider Service...");
+            logger.info("[Provider] Running Provider Service...");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            logger.error("Provider Service interrupted Exception occurrs", e);
+            logger.error("[Provider] Provider Service interrupted Exception occurrs", e);
             e.printStackTrace();
         }
         String resp = "mock response data";

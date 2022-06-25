@@ -1,4 +1,4 @@
-package com.hatsukoi.genesis.common.extension;
+package com.hatsukoi.genesis.annotation;
 
 import java.lang.annotation.*;
 

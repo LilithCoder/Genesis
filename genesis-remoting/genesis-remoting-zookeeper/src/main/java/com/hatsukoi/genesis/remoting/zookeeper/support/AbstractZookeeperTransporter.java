@@ -6,7 +6,6 @@ import com.hatsukoi.genesis.remoting.zookeeper.ZookeeperClient;
 import com.hatsukoi.genesis.remoting.zookeeper.ZookeeperTransporter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

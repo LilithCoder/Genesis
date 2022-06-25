@@ -1,6 +1,6 @@
 package com.hatsukoi.genesis.transport;
 
-import com.hatsukoi.genesis.factory.BeanManager;
+import com.hatsukoi.genesis.factory.BeanFactory;
 import com.hatsukoi.genesis.protocol.Header;
 import com.hatsukoi.genesis.protocol.Message;
 import com.hatsukoi.genesis.protocol.Request;
@@ -38,7 +38,7 @@ public class InvokeRunnable implements Runnable {
         Class[] argTypes = payload.getArgTypes();
         Object[] args = payload.getArgs();
         // 通过的 Bean 管理器获取已注册的 Provider 服务 Bean
-        Object bean = BeanManager.getBean(serviceName);
+        Object bean = BeanFactory.getBean(serviceName);
         // 通过反射调用Bean中的相应方法
         try {
             Method method = bean.getClass().getMethod(methodName, argTypes);
